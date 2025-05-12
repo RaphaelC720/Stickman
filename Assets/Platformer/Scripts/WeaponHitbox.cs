@@ -17,7 +17,13 @@ public class WeaponHitbox : MonoBehaviour
             {
                 slime.TakeDamage(damage);
             }
+
+            BossSlimeScript boss = other.GetComponent<BossSlimeScript>(); 
+            
+            if (boss != null)
+            {
+                boss.TakeDamage(damage);
+            }
         }
     }
-
 }

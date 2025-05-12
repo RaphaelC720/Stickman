@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 793b6f9ef94e35a438740424416e7c83, type: 3}
   m_Name: Shuriken
   m_EditorClassIdentifier: 
-  Weapon: {fileID: 6432239856989745369, guid: 35d8575e3cf1c5540b6a2b3caa13869f, type: 3}
+  Weapon: {fileID: 4990628474521312934, guid: 412699d1b3747c04a9f368a2f0772817, type: 3}
+  Projectile: {fileID: 6432239856989745369, guid: 35d8575e3cf1c5540b6a2b3caa13869f, type: 3}
   WeaponName: Shuriken
   WeaponDamage: 10
   WeaponCooldown: 2

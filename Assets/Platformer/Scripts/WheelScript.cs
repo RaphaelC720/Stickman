@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class WheelScript : MonoBehaviour
 {
@@ -8,7 +9,6 @@ public class WheelScript : MonoBehaviour
     public weaponbase selectedWeapon; 
 
     public weaponbase[] availableWeapons; // Array of available weapons
-
 
     void Start()
     {
@@ -30,6 +30,8 @@ public class WheelScript : MonoBehaviour
 
     public void SelectAndEquipWeapon(weaponbase newWeapon)
     {
+        if (selectedWeapon == newWeapon)
+            return;
         selectedWeapon = newWeapon;
         EquipSelectedWeapon();
     }

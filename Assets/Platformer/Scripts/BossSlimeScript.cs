@@ -1,15 +1,14 @@
-using System.Numerics;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class SlimeScript : MonoBehaviour
+public class BossSlimeScript : MonoBehaviour
 {
     public int Health;
     public float Damage;
-    public float Speed; 
+    public float Speed;
     public float JumpPower;
-    public float JumpCooldown = 2f;
-    public float Stunned = 0f;
+    public float JumpCooldown;
+    public float Stunned;
 
     public GameObject target;
     public SpriteRenderer SR;
@@ -17,54 +16,74 @@ public class SlimeScript : MonoBehaviour
     public Animator Anim;
     public bool OnGround = true;
     private float jumpTimer;
-    private float range = 10;
+    private float range = 30;
 
+    public GameObject Slime;
+    public float AttackCD;
+    private float AttackTimer;
 
     void Start()
     {
         RB.gravityScale = 2f;
         jumpTimer = JumpCooldown;
+        AttackTimer = AttackCD;
+
     }
 
-    void Update()
+    private void Update()
     {
         if (Stunned > 0)
         {
             Stunned -= Time.deltaTime;
-            if(Stunned > 0)
+            if (Stunned > 0)
                 SR.color = Color.red;
-            else 
+            else
                 SR.color = Color.white;
             return;
         }
 
         float distanceToPlayer = UnityEngine.Vector2.Distance(target.transform.position, transform.position);
-        if(distanceToPlayer <= range)
+        if (distanceToPlayer <= range)
         {
             UnityEngine.Vector2 vel;
             vel = (target.transform.position - transform.position).normalized;
-            RB.linearVelocity = new UnityEngine.Vector2(vel.x*Speed, RB.linearVelocity.y);
+            RB.linearVelocity = new UnityEngine.Vector2(vel.x * Speed, RB.linearVelocity.y);
 
             if (OnGround)
             {
+                AttackTimer -= Time.deltaTime;
+
+
+                if (AttackTimer <= 0f)
+                {
+                    Vector2 spawnPos = transform.position + new Vector3(1f * transform.localScale.x, 0, 0); // in front of boss
+                    GameObject newSlime = Instantiate(Slime, spawnPos, Quaternion.identity);
+                    newSlime.GetComponent<SlimeScript>().target = target;
+
+                    AttackTimer = AttackCD;
+                }
                 jumpTimer -= Time.deltaTime;
 
                 if (jumpTimer <= 0f)
                 {
-                jump();
-                Anim.Play("slimeJump");
-                jumpTimer = JumpCooldown; // reset timer AFTER jumping
+                    jump();
+                    Anim.Play("BossJump");
+                    jumpTimer = JumpCooldown; // reset timer AFTER jumping
                 }
+
             }
+            
         }
+
+
     }
 
     void OnCollisionEnter2D(Collision2D other)
     {
-        if (other.gameObject.CompareTag("Ground")) 
+        if (other.gameObject.CompareTag("Ground"))
             OnGround = true;
 
-        if(other.gameObject.tag == "Player")
+        if (other.gameObject.tag == "Player")
         {
             target.GetComponent<PlayerScript>().Health -= Damage;
         }
@@ -73,12 +92,12 @@ public class SlimeScript : MonoBehaviour
             Destroy(gameObject);
         }
     }
-    
+
     public void TakeDamage(float dmg)
     {
         Health -= (int)dmg;
-        Stunned = 1f;
-        UnityEngine.Vector2 vel = new UnityEngine.Vector2(5, 3);
+        Stunned = 0.1f;
+        UnityEngine.Vector2 vel = new UnityEngine.Vector2(3, 3);
         if (target.transform.position.x > transform.position.x)
             vel.x *= -2;
         RB.AddForce(vel, ForceMode2D.Impulse);
@@ -87,17 +106,20 @@ public class SlimeScript : MonoBehaviour
             die();
     }
 
-
     public void die()
     {
         if (Health <= 0)
+        {
             Destroy(gameObject);
+            SceneManager.LoadScene("You Win");
+        }
     }
 
     public void jump()
-    {        
+    {
         RB.linearVelocity = new UnityEngine.Vector2(RB.linearVelocity.x, JumpPower);
         OnGround = false;
     }
-}
 
+
+}

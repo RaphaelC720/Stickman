@@ -4,6 +4,7 @@ using UnityEngine;
 public class weaponbase : ScriptableObject
 {
     public GameObject Weapon;
+    public GameObject Projectile;
     public string WeaponName;
     public float WeaponDamage;
     public float WeaponCooldown;

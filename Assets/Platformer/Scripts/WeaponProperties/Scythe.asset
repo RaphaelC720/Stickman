@@ -10,13 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 793b6f9ef94e35a438740424416e7c83, type: 3}
-  m_Name: Sword
+  m_Name: Scythe
   m_EditorClassIdentifier: 
-  Weapon: {fileID: 9144881109419755611, guid: fffde5e2429e87643a89f9a95680a02d, type: 3}
+  Weapon: {fileID: 1495981325266562402, guid: 5628d503791befd4b9ecf08dbdb8e298, type: 3}
   Projectile: {fileID: 0}
-  WeaponName: Sword
-  WeaponDamage: 20
-  WeaponCooldown: 1
-  equipPosition: {x: 0.8, y: 0, z: 0}
-  equipRotation: {x: 0, y: 0, z: 20}
-  equipScale: {x: 0.3, y: 0.3, z: 0}
+  WeaponName: Scythe
+  WeaponDamage: 15
+  WeaponCooldown: 2
+  equipPosition: {x: 0.2, y: 0.9, z: 0}
+  equipRotation: {x: 0, y: 0, z: 50}
+  equipScale: {x: 1, y: 1, z: 1}
